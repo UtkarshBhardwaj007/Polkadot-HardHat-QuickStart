@@ -2,34 +2,48 @@
 
 🚀 Zero-configuration development environment for Polkadot smart contracts using Hardhat.
 
-[![Open in VS Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20VS%20Code&labelColor=2c2c32&color=007ACC&logoColor=007ACC)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart)
+[![Open in VS Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20VS%20Code&labelColor=2c2c32&color=007ACC&logoColor=007ACC)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/UtkarshBhardwaj007/Polkadot-Hardhat-Quickstart)
 [![Docker Image](https://img.shields.io/badge/Docker%20Image-ghcr.io-blue?logo=docker)](https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/pkgs/container/polkadot-hardhat-quickstart)
 
 ## 🚀 Quick Start
 
-### Option 1: Open in VS Code (Recommended)
+### Option 1: Use the Button (Easiest)
+
+Just click the button above to automatically:
+- Clone this repository into a Docker volume
+- Open it in VS Code with the DevContainer
+- Install all dependencies
+
+**Note:** Make sure VS Code is already running before clicking the button.
+
+### Option 2: Clone and Open Locally
 
 1. **Install Prerequisites:**
    - [VS Code](https://code.visualstudio.com/)
    - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
    - [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-2. **Clone and open the repository:**
+2. **IMPORTANT: Check Docker Desktop Settings**
+   - Open Docker Desktop → Settings → Resources → File Sharing
+   - Ensure `/Users` is in the list (should be there by default)
+   - If not, add it and click "Apply & Restart"
+
+3. **Clone and open the repository:**
    ```bash
-   git clone https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart.git
-   cd Polkadot-HardHat-QuickStart
+   git clone https://github.com/UtkarshBhardwaj007/Polkadot-Hardhat-Quickstart.git
+   cd Polkadot-Hardhat-Quickstart
    code .
    ```
 
-3. **When VS Code opens, you'll see a notification:**
-   - Click **"Reopen in Container"** when prompted
-   - Or use Command Palette: `Dev Containers: Reopen in Container`
+4. **When VS Code opens:**
+   - You'll see a notification to "Reopen in Container" - click it
+   - Or use Command Palette (Cmd+Shift+P): `Dev Containers: Reopen in Container`
 
-4. **VS Code will automatically:**
+5. **VS Code will automatically:**
    - Pull the Docker image
    - Create a development container
-   - Mount your code
-   - Install dependencies via `npm install`
+   - Set up your project files
+   - Install dependencies
    - Open a terminal ready for development
 
 ### Option 2: Use Docker Directly

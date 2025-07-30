@@ -1,21 +1,7 @@
 {
     "name": "Polkadot Hardhat Development",
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
-    "customizations": {
-      "vscode": {
-        "extensions": [
-          "NomicFoundation.hardhat-solidity",
-          "esbenp.prettier-vscode",
-          "dbaeumer.vscode-eslint"
-        ],
-        "settings": {
-          "terminal.integrated.defaultProfile.linux": "bash",
-          "editor.formatOnSave": true,
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
-          "solidity.formatter": "prettier"
-        }
-      }
-    },
-    "postCreateCommand": "if [ -f /usr/local/bin/docker-entrypoint.sh ]; then bash /usr/local/bin/docker-entrypoint.sh; elif [ ! -d node_modules ]; then npm install; fi",
+    "overrideCommand": false,
+    "postCreateCommand": "bash -c 'if [ -d /workspace ] && [ ! -f package.json ]; then cp -r /workspace/* /workspace/.gitignore . 2>/dev/null || true; fi && if [ -f package.json ] && [ ! -d node_modules ]; then npm install; fi'",
     "remoteUser": "root"
 }
