@@ -1,25 +1,24 @@
-# Sample Polkadot Hardhat Project
+# Polkadot Hardhat Quickstart
 
-This project demonstrates how to use Hardhat with Polkadot. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+🚀 Zero-configuration development environment for Polkadot smart contracts using Hardhat.
 
-1) To setup the project, run the following command:
+## Quick Start with Docker
 
-```shell
-mkdir hardhat-project
-cd hardhat-project
-docker run -it --rm -v $(pwd):/project polkadot-hardhat-quickstart:test
+```bash
+# Create a new project directory
+mkdir my-polkadot-project && cd my-polkadot-project
+
+# Run the DevContainer - it automatically initializes everything!
+docker run -it --rm -v $(pwd):/project ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest
 ```
 
-2) If you close the shell accidentally, you can re-enter the container using the same command:
+This will automatically:
+- ✅ Create the complete project structure
+- ✅ Install all dependencies
+- ✅ Download platform-specific binaries
+- ✅ Configure Hardhat for Polkadot
+- ✅ Provide example contracts and tests
 
-```shell
-docker run -it --rm -v $(pwd):/project polkadot-hardhat-quickstart:test
-```
+## Manual Setup
 
-3) Try running some of the following tasks:
-
-```shell
-npx hardhat test
-npx hardhat node
-npx hardhat compile
-```
+[Your existing content continues here...]
