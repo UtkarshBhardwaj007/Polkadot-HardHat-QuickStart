@@ -42,6 +42,39 @@ else
     cd $PROJECT_DIR
 fi
 
+# Check if private key is already set
+echo -e "${BLUE}🔑 Checking for deployment private key...${NC}"
+if ! npx hardhat vars has TEST_ACC_PRIVATE_KEY 2>/dev/null; then
+    echo -e "${YELLOW}⚠️  No private key found for deployment${NC}"
+    echo -e "${BLUE}Please enter your private key for deploying to Polkadot Hub Testnet:${NC}"
+    echo -e "${YELLOW}(This will be stored securely using Hardhat's configuration variables)${NC}"
+    
+    # Read private key securely (without echoing to terminal)
+    read -s -p "Private key: " PRIVATE_KEY
+    echo ""  # New line after hidden input
+    
+    if [ -n "$PRIVATE_KEY" ]; then
+        # Set the private key using hardhat vars
+        echo "$PRIVATE_KEY" | npx hardhat vars set TEST_ACC_PRIVATE_KEY > /dev/null 2>&1
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✓ Private key saved successfully!${NC}"
+            echo -e "${BLUE}You can now deploy to Polkadot Hub Testnet using:${NC}"
+            echo -e "  ${GREEN}npx hardhat ignition deploy ignition/modules/MyToken.ts --network polkadotHubTestnet${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Failed to save private key. You can set it manually later using:${NC}"
+            echo -e "  ${GREEN}npx hardhat vars set TEST_ACC_PRIVATE_KEY${NC}"
+        fi
+    else
+        echo -e "${YELLOW}⚠️  No private key provided. You can set it later using:${NC}"
+        echo -e "  ${GREEN}npx hardhat vars set TEST_ACC_PRIVATE_KEY${NC}"
+    fi
+else
+    echo -e "${GREEN}✓ Private key already configured${NC}"
+fi
+
+echo ""
+
 # Execute the command passed to docker run, or start bash if none
 if [ "$#" -eq 0 ]; then
     echo -e "${BLUE}Starting interactive shell...${NC}"
