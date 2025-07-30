@@ -1,0 +1,26 @@
+{
+    "name": "Polkadot Hardhat Development",
+    "image": "polkadot-hardhat-quickstart:latest",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
+    "workspaceFolder": "/project",
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/project,type=bind"
+    ],
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "NomicFoundation.hardhat-solidity",
+          "esbenp.prettier-vscode",
+          "dbaeumer.vscode-eslint"
+        ],
+        "settings": {
+          "terminal.integrated.defaultProfile.linux": "bash",
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "solidity.formatter": "prettier"
+        }
+      }
+    },
+    "postCreateCommand": "echo 'Welcome to Polkadot Hardhat Development!'",
+    "remoteUser": "root"
+}

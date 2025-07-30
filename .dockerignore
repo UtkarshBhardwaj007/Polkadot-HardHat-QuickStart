@@ -1,0 +1,48 @@
+# Node modules - will be installed fresh
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Hardhat artifacts and cache
+artifacts/
+artifacts-pvm/
+cache/
+cache-pvm/
+typechain-types/
+
+# Testing
+coverage/
+coverage.json
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+DOCKER_*.md
+
+# Temporary files
+*.tmp
+*.temp
+.qodo/
+
+# Binaries directory - will be downloaded during build
+binaries/
