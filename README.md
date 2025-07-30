@@ -1,4 +1,4 @@
-# Polkadot Hardhat Quickstart
+# Polkadot Hardhat Quickstart DevContainer
 
 🚀 Zero-configuration development environment for Polkadot smart contracts using Hardhat.
 
