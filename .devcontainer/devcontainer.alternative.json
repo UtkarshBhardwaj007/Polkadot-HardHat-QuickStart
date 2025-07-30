@@ -16,6 +16,6 @@
         }
       }
     },
-    "postCreateCommand": "if [ -f /usr/local/bin/docker-entrypoint.sh ]; then bash /usr/local/bin/docker-entrypoint.sh; elif [ ! -d node_modules ]; then npm install; fi",
+    "postCreateCommand": "cd /project && /usr/local/bin/docker-entrypoint.sh",
     "remoteUser": "root"
 }

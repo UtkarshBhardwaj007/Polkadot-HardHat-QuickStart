@@ -1,6 +1,8 @@
 {
     "name": "Polkadot Hardhat Development",
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
+    "workspaceFolder": "/project",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
     "customizations": {
       "vscode": {
         "extensions": [
@@ -16,6 +18,6 @@
         }
       }
     },
-    "postCreateCommand": "if [ -f /usr/local/bin/docker-entrypoint.sh ]; then bash /usr/local/bin/docker-entrypoint.sh; elif [ ! -d node_modules ]; then npm install; fi",
+    "postStartCommand": "/usr/local/bin/docker-entrypoint.sh",
     "remoteUser": "root"
 }

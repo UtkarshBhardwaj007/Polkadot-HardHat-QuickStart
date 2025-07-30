@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest
+    volumes:
+      - ..:/project:cached
+    command: sleep infinity
+    working_dir: /project
