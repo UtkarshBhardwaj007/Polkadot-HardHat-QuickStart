@@ -18,3 +18,5 @@ This will automatically:
 - ✅ Download platform-specific binaries
 - ✅ Configure Hardhat for Polkadot
 - ✅ Provide example contracts and tests
+
+![Docker Build](https://github.com/UtkarshBhardwaj007/Polkadot-Hardhat-Quickstart/actions/workflows/docker-publish.yml/badge.svg)
