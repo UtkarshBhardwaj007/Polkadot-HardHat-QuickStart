@@ -18,7 +18,3 @@ This will automatically:
 - ✅ Download platform-specific binaries
 - ✅ Configure Hardhat for Polkadot
 - ✅ Provide example contracts and tests
-
-## Manual Setup
-
-[Your existing content continues here...]
