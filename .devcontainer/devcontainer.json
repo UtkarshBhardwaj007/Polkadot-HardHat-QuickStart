@@ -1,8 +1,8 @@
 {
     "name": "Polkadot Hardhat Development",
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
-    "overrideCommand": true,
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "workspaceFolder": "/project",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
     "customizations": {
       "vscode": {
         "extensions": [
@@ -18,6 +18,6 @@
         }
       }
     },
-    "postCreateCommand": "npm install",
+    "postCreateCommand": "if [ ! -f package.json ]; then /usr/local/bin/docker-entrypoint.sh; fi",
     "remoteUser": "root"
 }

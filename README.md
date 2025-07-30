@@ -2,7 +2,7 @@
 
 🚀 Zero-configuration development environment for Polkadot smart contracts using Hardhat.
 
-[![Open in VS Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20VS%20Code&labelColor=2c2c32&color=007ACC&logoColor=007ACC)](https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart)
+[![Open in VS Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20VS%20Code&labelColor=2c2c32&color=007ACC&logoColor=007ACC)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart)
 [![Docker Image](https://img.shields.io/badge/Docker%20Image-ghcr.io-blue?logo=docker)](https://github.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/pkgs/container/polkadot-hardhat-quickstart)
 
 ## 🚀 Quick Start
