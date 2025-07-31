@@ -101,10 +101,10 @@ esac
 echo -e "${YELLOW}Detected platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
 
 # Create binaries directory if it doesn't exist
-mkdir -p $WORKSPACE_DIR/binaries
+mkdir -p $PROJECT_DIR/binaries
 
 # Download binaries based on detected platform
-cd $WORKSPACE_DIR/binaries
+cd $PROJECT_DIR/binaries
 
 if [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "linux" ]; then
     echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
