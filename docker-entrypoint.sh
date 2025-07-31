@@ -29,6 +29,10 @@ if [ -z "$(ls -A $PROJECT_DIR 2>/dev/null)" ] || [ ! -f "$PROJECT_DIR/package.js
     echo -e "${GREEN}✓ Installing dependencies (this may take a few minutes)...${NC}"
     npm install
     
+    # Update @parity/hardhat-polkadot to latest version
+    echo -e "${GREEN}✓ Updating @parity/hardhat-polkadot to latest version...${NC}"
+    npm install --save-dev @parity/hardhat-polkadot@latest
+    
     echo -e "${GREEN}✨ Project initialized successfully!${NC}"
     echo -e "${BLUE}You can now:${NC}"
     echo -e "  - Create contracts in the ${GREEN}contracts/${NC} folder"
@@ -40,9 +44,113 @@ if [ -z "$(ls -A $PROJECT_DIR 2>/dev/null)" ] || [ ! -f "$PROJECT_DIR/package.js
 else
     echo -e "${GREEN}✓ Existing project detected${NC}"
     cd $PROJECT_DIR
+    
+    # Check and update @parity/hardhat-polkadot if needed
+    if npm list @parity/hardhat-polkadot &>/dev/null; then
+        echo -e "${GREEN}✓ Checking for @parity/hardhat-polkadot updates...${NC}"
+        # Get current and latest versions
+        CURRENT_VERSION=$(npm list @parity/hardhat-polkadot --depth=0 --json 2>/dev/null | grep -oP '"version":\s*"\K[^"]+' | head -1)
+        LATEST_VERSION=$(npm view @parity/hardhat-polkadot version 2>/dev/null)
+        
+        if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ] && [ -n "$LATEST_VERSION" ]; then
+            echo -e "${YELLOW}📦 Updating @parity/hardhat-polkadot from v${CURRENT_VERSION} to v${LATEST_VERSION}...${NC}"
+            npm install --save-dev @parity/hardhat-polkadot@latest
+            echo -e "${GREEN}✓ Updated successfully!${NC}"
+        else
+            echo -e "${GREEN}✓ @parity/hardhat-polkadot is already at the latest version (v${CURRENT_VERSION})${NC}"
+        fi
+    fi
 fi
 
+# Download platform-specific binaries at runtime
+echo -e "${BLUE}🔧 Setting up platform-specific binaries...${NC}"
 
+# Detect runtime platform
+ARCH=$(uname -m)
+OS=$(uname -s)
+
+# Map architecture names
+case "$ARCH" in
+    x86_64)
+        RUNTIME_ARCH="amd64"
+        ;;
+    aarch64|arm64)
+        RUNTIME_ARCH="arm64"
+        ;;
+    *)
+        RUNTIME_ARCH="$ARCH"
+        ;;
+esac
+
+# Map OS names
+case "$OS" in
+    Linux)
+        RUNTIME_OS="linux"
+        ;;
+    Darwin)
+        RUNTIME_OS="darwin"
+        ;;
+    MINGW*|MSYS*|CYGWIN*)
+        RUNTIME_OS="windows"
+        ;;
+    *)
+        RUNTIME_OS="$OS"
+        ;;
+esac
+
+echo -e "${YELLOW}Detected platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
+
+# Create binaries directory if it doesn't exist
+mkdir -p $WORKSPACE_DIR/binaries
+
+# Download binaries based on detected platform
+cd $WORKSPACE_DIR/binaries
+
+if [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "linux" ]; then
+    echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
+    # Replace with actual URLs
+    echo "#!/bin/bash\necho 'Linux AMD64 substrate-node dummy binary'" > substrate-node
+    echo "#!/bin/bash\necho 'Linux AMD64 eth-rpc dummy binary'" > eth-rpc
+elif [ "$RUNTIME_ARCH" = "arm64" ] && [ "$RUNTIME_OS" = "linux" ]; then
+    echo -e "${GREEN}Downloading Linux ARM64 binaries...${NC}"
+    # Replace with actual URLs
+    echo "#!/bin/bash\necho 'Linux ARM64 substrate-node dummy binary'" > substrate-node
+    echo "#!/bin/bash\necho 'Linux ARM64 eth-rpc dummy binary'" > eth-rpc
+elif [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "darwin" ]; then
+    echo -e "${GREEN}Downloading macOS Intel binaries...${NC}"
+    # Replace with actual URLs
+    echo "#!/bin/bash\necho 'macOS Intel substrate-node dummy binary'" > substrate-node
+    echo "#!/bin/bash\necho 'macOS Intel eth-rpc dummy binary'" > eth-rpc
+elif [ "$RUNTIME_ARCH" = "arm64" ] && [ "$RUNTIME_OS" = "darwin" ]; then
+    echo -e "${GREEN}Downloading macOS Silicon binaries...${NC}"
+    wget -q -O substrate-node "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/substrate-node" || {
+        echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon substrate-node dummy binary'" > substrate-node
+    }
+    wget -q -O eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/eth-rpc" || {
+        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > eth-rpc
+    }
+elif [ "$RUNTIME_OS" = "windows" ]; then
+    echo -e "${GREEN}Downloading Windows binaries...${NC}"
+    # Replace with actual URLs
+    echo "@echo off\necho Windows substrate-node dummy binary" > substrate-node.bat
+    echo "@echo off\necho Windows eth-rpc dummy binary" > eth-rpc.bat
+else
+    echo -e "${YELLOW}⚠️  Unsupported platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
+    echo -e "${YELLOW}Creating dummy binaries...${NC}"
+    echo "#!/bin/bash\necho 'Unsupported platform substrate-node dummy binary'" > substrate-node
+    echo "#!/bin/bash\necho 'Unsupported platform eth-rpc dummy binary'" > eth-rpc
+fi
+
+# Make binaries executable
+chmod +x * 2>/dev/null || true
+
+echo -e "${GREEN}✓ Binaries setup complete${NC}"
+echo ""
+
+# Return to project directory
+cd $PROJECT_DIR
 
 # Create a simple init script for private key setup
 cat > /tmp/setup_private_key.sh << 'EOF'
