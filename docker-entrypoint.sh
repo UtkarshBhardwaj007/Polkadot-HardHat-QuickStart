@@ -110,17 +110,26 @@ if [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "linux" ]; then
     echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
     # Replace with actual URLs
     echo "#!/bin/bash\necho 'Linux AMD64 substrate-node dummy binary'" > substrate-node
-    echo "#!/bin/bash\necho 'Linux AMD64 eth-rpc dummy binary'" > eth-rpc
+    wget -q -O eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/eth-rpc" || {
+        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > eth-rpc
+    }
 elif [ "$RUNTIME_ARCH" = "arm64" ] && [ "$RUNTIME_OS" = "linux" ]; then
     echo -e "${GREEN}Downloading Linux ARM64 binaries...${NC}"
     # Replace with actual URLs
     echo "#!/bin/bash\necho 'Linux ARM64 substrate-node dummy binary'" > substrate-node
-    echo "#!/bin/bash\necho 'Linux ARM64 eth-rpc dummy binary'" > eth-rpc
+    wget -q -O eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/eth-rpc" || {
+        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > eth-rpc
+    }
 elif [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "darwin" ]; then
     echo -e "${GREEN}Downloading macOS Intel binaries...${NC}"
     # Replace with actual URLs
     echo "#!/bin/bash\necho 'macOS Intel substrate-node dummy binary'" > substrate-node
-    echo "#!/bin/bash\necho 'macOS Intel eth-rpc dummy binary'" > eth-rpc
+    wget -q -O eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/eth-rpc" || {
+        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > eth-rpc
+    }
 elif [ "$RUNTIME_ARCH" = "arm64" ] && [ "$RUNTIME_OS" = "darwin" ]; then
     echo -e "${GREEN}Downloading macOS Silicon binaries...${NC}"
     wget -q -O substrate-node "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/substrate-node" || {
@@ -135,7 +144,10 @@ elif [ "$RUNTIME_OS" = "windows" ]; then
     echo -e "${GREEN}Downloading Windows binaries...${NC}"
     # Replace with actual URLs
     echo "@echo off\necho Windows substrate-node dummy binary" > substrate-node.bat
-    echo "@echo off\necho Windows eth-rpc dummy binary" > eth-rpc.bat
+    wget -q -O eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/raw/main/binaries/eth-rpc" || {
+        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > eth-rpc
+    }
 else
     echo -e "${YELLOW}⚠️  Unsupported platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
     echo -e "${YELLOW}Creating dummy binaries...${NC}"
