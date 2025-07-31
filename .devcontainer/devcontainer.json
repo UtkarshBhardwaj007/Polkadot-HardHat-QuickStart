@@ -3,8 +3,10 @@
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
     "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
     "workspaceFolder": "/project",
-    "overrideCommand": false,
+    "overrideCommand": true,
+    "runArgs": ["--init"],
     "remoteUser": "root",
+    "postStartCommand": "/usr/local/bin/docker-entrypoint.sh",
     "customizations": {
         "vscode": {
             "extensions": [

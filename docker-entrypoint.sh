@@ -194,19 +194,11 @@ chmod +x /tmp/setup_private_key.sh
 
 # Execute the command passed to docker run, or start bash if none
 if [ "$#" -eq 0 ]; then
-    # Check if we're in a devcontainer (VS Code sets certain environment variables)
-    if [ -n "$REMOTE_CONTAINERS" ] || [ -n "$CODESPACES" ] || [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
-        # In devcontainer, just run the setup script and exit (VS Code will handle the shell)
-        source /tmp/setup_private_key.sh
-        # Don't exec a new shell, let VS Code handle it
-    else
-        # Normal docker run - start interactive shell
-        echo -e "${BLUE}Starting interactive shell...${NC}"
-        echo ""
-        
-        # Start bash and run the setup script after it's ready
-        exec /bin/bash -c "source /tmp/setup_private_key.sh; exec /bin/bash"
-    fi
+    echo -e "${BLUE}Starting interactive shell...${NC}"
+    echo ""
+    
+    # Start bash and run the setup script after it's ready
+    exec /bin/bash -c "source /tmp/setup_private_key.sh; exec /bin/bash"
 else
     exec "$@"
 fi
