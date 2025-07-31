@@ -19,6 +19,9 @@ mkdir my-polkadot-project && cd my-polkadot-project
 
 # Run the DevContainer - it automatically initializes everything!
 docker run -it --rm -v $(pwd):/project ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest
+
+# Setup your private key
+npx hardhat vars set TEST_ACC_PRIVATE_KEY <your_private_key>
 ```
 
 This will automatically:
@@ -28,6 +31,6 @@ This will automatically:
 - ✅ Configure Hardhat for Polkadot
 - ✅ Provide example contracts and tests
 
-If you exit the terminal and want to re-open it, just run the same docker command again.
+If you exit the terminal and want to re-open it, just run the same docker run command again.
 
 ![Docker Build](https://github.com/UtkarshBhardwaj007/Polkadot-Hardhat-Quickstart/actions/workflows/docker-publish.yml/badge.svg)
