@@ -35,9 +35,9 @@ COPY ignition/ ./ignition/
 # Create binaries directory
 RUN mkdir -p binaries
 
-# Create dummy binaries for testing
-# Replace this section with actual binary downloads when URLs are available
-RUN echo "Creating dummy binaries for platform: ${TARGETPLATFORM}, arch: ${TARGETARCH}, os: ${TARGETOS}" && \
+# Download actual binaries based on platform
+# Replace the URLs below with actual binary download URLs
+RUN echo "Downloading binaries for platform: ${TARGETPLATFORM}, arch: ${TARGETARCH}, os: ${TARGETOS}" && \
     if [ "${TARGETARCH}" = "amd64" ] && [ "${TARGETOS}" = "linux" ]; then \
         echo "Creating Linux AMD64 binaries..." && \
         echo "#!/bin/bash\necho 'Linux AMD64 substrate-node dummy binary'" > binaries/substrate-node && \
@@ -51,9 +51,9 @@ RUN echo "Creating dummy binaries for platform: ${TARGETPLATFORM}, arch: ${TARGE
         echo "#!/bin/bash\necho 'macOS Intel substrate-node dummy binary'" > binaries/substrate-node && \
         echo "#!/bin/bash\necho 'macOS Intel eth-rpc dummy binary'" > binaries/eth-rpc; \
     elif [ "${TARGETARCH}" = "arm64" ] && [ "${TARGETOS}" = "darwin" ]; then \
-        echo "Creating macOS Silicon binaries..." && \
-        echo "#!/bin/bash\necho 'macOS Silicon substrate-node dummy binary'" > binaries/substrate-node && \
-        echo "#!/bin/bash\necho 'macOS Silicon eth-rpc dummy binary'" > binaries/eth-rpc; \
+        echo "Downloading macOS Silicon binaries..." && \
+        wget -O binaries/substrate-node "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/blob/main/binaries/substrate-node" && \
+        wget -O binaries/eth-rpc "https://github.com/UtkarshBhardwaj007/hardhat-polkadot-example/blob/main/binaries/eth-rpc"; \
     elif [ "${TARGETOS}" = "windows" ]; then \
         echo "Creating Windows binaries..." && \
         echo "@echo off\necho Windows substrate-node dummy binary" > binaries/substrate-node.bat && \
