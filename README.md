@@ -19,9 +19,6 @@ mkdir my-polkadot-project && cd my-polkadot-project
 
 # Run the DevContainer - it automatically initializes everything!
 docker run -it --rm -v $(pwd):/project ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest
-
-# Setup your private key
-npx hardhat vars set TEST_ACC_PRIVATE_KEY <your_private_key>
 ```
 
 This will automatically:
