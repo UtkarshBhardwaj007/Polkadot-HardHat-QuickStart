@@ -1,8 +1,9 @@
 {
     "name": "Polkadot Hardhat Development",
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
-    "runArgs": ["--entrypoint", "/bin/bash"],
-    "postCreateCommand": "if [ -d /workspace ] && [ ! -f package.json ]; then cp -r /workspace/* /workspace/.[^.]* . 2>/dev/null || true; fi && npm install",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
+    "workspaceFolder": "/project",
+    "overrideCommand": false,
     "remoteUser": "root",
     "customizations": {
         "vscode": {
