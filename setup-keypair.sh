@@ -24,15 +24,16 @@ else
     read -s -p "Paseo Secret (leave blank to generate new):" SECRET_INPUT
     echo ""
     if [ -z "$SECRET_INPUT" ]; then
-        subkey generate --network polkadot --output-type json > ~/.address.json
+        subkey generate --scheme ecdsa --network polkadot --output-type json > ~/.address.json
     else
-        subkey inspect $SECRET_INPUT --network polkadot --output-type json > ~/.address.json
+        subkey inspect --scheme ecdsa $SECRET_INPUT --network polkadot --output-type json > ~/.address.json
     fi
 fi
 
 # Capture keypair
 PUBLIC_ADDRESS=$(jq -r '.ss58PublicKey' ~/.address.json)
 SECRET=$(jq -r '.secretSeed' ~/.address.json)
+EVM_ADDRESS=$(node -e 'const {Wallet}=require("ethers"); console.log(new Wallet(process.argv[1]).address)' "$SECRET")
 
 # Add keypair to hardhat config | TODO! Check if we're in hardhat or foundry
 echo "$SECRET" | npx hardhat vars set TEST_ACC_PRIVATE_KEY >/dev/null 2>&1
@@ -40,10 +41,10 @@ echo "$SECRET" | npx hardhat vars set TEST_ACC_PRIVATE_KEY >/dev/null 2>&1
 # Output Message
 echo -e "
 
-Paseo Address: ${BOLD}${PUBLIC_ADDRESS}${STYLE_END}
+EVM Address: ${BOLD}${EVM_ADDRESS}${STYLE_END}
 ${BOLD}${ITALIC}${RED}Note:${STYLE_END} ${ITALIC}${GREY}Do not use this address for anything of real value${STYLE_END}
 
 $(bash /usr/local/bin/devtools-scripts/check-balance.sh)
-Paste the address into the ${LINK_START}${BLUE}Paseo faucet${LINK_END}${STYLE_END} to receive tokens for testing your contracts!
+Paste the address into the ${LINK_START}${BLUE}Paseo Smart Contract faucet${LINK_END}${STYLE_END} to receive tokens for testing your contracts!
 
 "
