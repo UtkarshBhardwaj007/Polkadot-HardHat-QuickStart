@@ -8,8 +8,16 @@
 ## 🚀 Quick Start
 
 ### Option 1: Use the Button (Easiest)
+###### Prerequisite: Install the ***Dev Container*** plugin in your IDE
 
-WIP
+1. Inside of your project directory, fetch our devcontainer:
+```
+curl -fsSL --create-dirs \
+  -o .devcontainer/devcontainer.json \
+  https://raw.githubusercontent.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/charles-dev/.devcontainer/devcontainer.json
+```
+2. Open the project in VS Code, and press the "Reopen in Container" button.
+
 
 ### Option 2: Use Docker Directly
 
