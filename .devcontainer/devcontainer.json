@@ -4,6 +4,7 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
     "workspaceFolder": "/project",
     "overrideCommand": true,
+    "runArgs": ["--entrypoint", "/bin/sh"],
     "updateRemoteUserUID": false,
     "containerEnv": {
         "WORKSPACE_DIR": "/workspace",
