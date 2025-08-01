@@ -1,13 +1,13 @@
 {
   "name": "Polkadot Hardhat Development",
-  "image": "polkadot-smartcontract-quickstart:debug",
+  "image": "polkadot-smartcontract-quickstart:0.1",
   "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
   "workspaceFolder": "/project",
   "containerEnv": {
     "WORKSPACE_DIR": "/workspace",
     "PROJECT_DIR": "/project"
   },
-  "postCreateCommand": "chmod +x /project/.devcontainer/init.sh && /project/.devcontainer/init.sh && devtools setup-devcontainer",
+  "postCreateCommand": "devtools setup-devcontainer",
   "postAttachCommand": "devtools setup-keypair",
   "remoteUser": "root",
   "customizations": {
