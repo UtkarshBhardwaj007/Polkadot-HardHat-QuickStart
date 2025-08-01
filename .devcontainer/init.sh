@@ -40,16 +40,23 @@ else
     cd $PROJECT_DIR
 fi
 
-# Create binaries directory with placeholders
+# Download Linux AMD64 binaries
 echo -e "${BLUE}🔧 Setting up binaries...${NC}"
 mkdir -p $PROJECT_DIR/binaries
 cd $PROJECT_DIR/binaries
 
-# Create placeholder binaries
-echo '#!/bin/bash
-echo "substrate-node placeholder - download real binary from releases.parity.io"' > substrate-node
-echo '#!/bin/bash
-echo "eth-rpc placeholder - download real binary from releases.parity.io"' > eth-rpc
+echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
+wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
+    echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
+    echo "#!/bin/bash" > substrate-node
+    echo "echo 'substrate-node dummy binary - download failed'" >> substrate-node
+}
+
+wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
+    echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+    echo "#!/bin/bash" > eth-rpc
+    echo "echo 'eth-rpc dummy binary - download failed'" >> eth-rpc
+}
 
 chmod +x substrate-node eth-rpc
 

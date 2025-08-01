@@ -62,80 +62,30 @@ else
     fi
 fi
 
-# Download platform-specific binaries at runtime
-echo -e "${BLUE}🔧 Setting up platform-specific binaries...${NC}"
-
-# Detect runtime platform
-ARCH=$(uname -m)
-OS=$(uname -s)
-
-# Map architecture names
-case "$ARCH" in
-    x86_64)
-        RUNTIME_ARCH="amd64"
-        ;;
-    aarch64|arm64)
-        RUNTIME_ARCH="arm64"
-        ;;
-    *)
-        RUNTIME_ARCH="$ARCH"
-        ;;
-esac
-
-# Map OS names
-case "$OS" in
-    Linux)
-        RUNTIME_OS="linux"
-        ;;
-    Darwin)
-        RUNTIME_OS="darwin"
-        ;;
-    MINGW*|MSYS*|CYGWIN*)
-        RUNTIME_OS="windows"
-        ;;
-    *)
-        RUNTIME_OS="$OS"
-        ;;
-esac
-
-echo -e "${YELLOW}Detected platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
+# Download Linux AMD64 binaries
+echo -e "${BLUE}🔧 Setting up binaries...${NC}"
 
 # Create binaries directory if it doesn't exist
 mkdir -p $PROJECT_DIR/binaries
 
-# Download binaries based on detected platform
+# Download binaries for Linux AMD64
 cd $PROJECT_DIR/binaries
 
-if [ "$RUNTIME_ARCH" = "amd64" ] && [ "$RUNTIME_OS" = "linux" ]; then
-    echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
-    wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
-        echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
-        echo "#!/bin/bash\necho 'Linux AMD64 substrate-node dummy binary'" > substrate-node
-    }
-    wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
-        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
-        echo "#!/bin/bash\necho 'Linux AMD64 eth-rpc dummy binary'" > eth-rpc
-    }
-elif [ "$RUNTIME_ARCH" = "arm64" ] && [ "$RUNTIME_OS" = "linux" ]; then
-    echo -e "${GREEN}Downloading Linux ARM64 binaries...${NC}"
-    # Replace with actual URLs
-    wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
-        echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
-        echo "#!/bin/bash\necho 'Linux ARM64 substrate-node dummy binary'" > substrate-node
-    }
-    wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
-        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
-        echo "#!/bin/bash\necho 'Linux ARM64 eth-rpc dummy binary'" > eth-rpc
-    }
-else
-    echo -e "${YELLOW}⚠️  Unsupported platform: ${RUNTIME_OS}/${RUNTIME_ARCH}${NC}"
-    echo -e "${YELLOW}Creating dummy binaries...${NC}"
-    echo "#!/bin/bash\necho 'Unsupported platform substrate-node dummy binary'" > substrate-node
-    echo "#!/bin/bash\necho 'Unsupported platform eth-rpc dummy binary'" > eth-rpc
-fi
+echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
+wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
+    echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
+    echo "#!/bin/bash" > substrate-node
+    echo "echo 'substrate-node dummy binary - download failed'" >> substrate-node
+}
+
+wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
+    echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+    echo "#!/bin/bash" > eth-rpc
+    echo "echo 'eth-rpc dummy binary - download failed'" >> eth-rpc
+}
 
 # Make binaries executable
-chmod +x * 2>/dev/null || true
+chmod +x substrate-node eth-rpc
 
 echo -e "${GREEN}✓ Binaries setup complete${NC}"
 echo ""
