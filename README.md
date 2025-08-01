@@ -7,18 +7,51 @@
 
 ## 🚀 Quick Start
 
-### Option 1: Use the Button (Easiest)
-###### Prerequisite: Install the ***Dev Container*** plugin in your IDE
+### Option 1: Click the _Open in VS Code_ button
 
-1. Inside of your project directory, fetch our devcontainer:
+As the Dev Container sets up, follow the instructions to configure a Paseo keypair with tokens to deploy your EVM contracts!
+
+Compile the contracts:
+
+```
+npx hardhat compile
+```
+
+Run tests:
+
+```
+npx hardhat test
+```
+
+Try deploying a test contract to the Paseo testnet:
+
+```
+npx hardhat ignition deploy ignition/modules/MyToken.ts --network polkadotHubTestnet
+```
+
+You may also setup a custom project with our dev container by running
+
 ```
 curl -fsSL --create-dirs \
   -o .devcontainer/devcontainer.json \
   https://raw.githubusercontent.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/charles-dev/.devcontainer/devcontainer.json
 ```
-2. Open the project in VS Code, and press the "Reopen in Container" button.
-3. As the Dev Container sets up, follow the instructions to configure a Paseo keypair with tokens to deploy your EVM contracts!
 
+And then in VS Code press the _"Reopen in Container"_ button
+
+### Option 2: Set up a custom project
+
+###### Prerequisite: Install the **_Dev Container_** plugin in your IDE
+
+1. Inside of your project directory, fetch our devcontainer:
+
+```
+curl -fsSL --create-dirs \
+  -o .devcontainer/devcontainer.json \
+  https://raw.githubusercontent.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/charles-dev/.devcontainer/devcontainer.json
+```
+
+2. Open the project in VS Code, and press the "Reopen in Container" button.
 
 ### Option 2: Use Docker Directly
 
@@ -31,6 +64,7 @@ docker run -it --rm -v $(pwd):/project ghcr.io/utkarshbhardwaj007/polkadot-hardh
 ```
 
 This will automatically:
+
 - ✅ Create the complete project structure
 - ✅ Install all dependencies
 - ✅ Download platform-specific binaries
