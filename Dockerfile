@@ -57,18 +57,12 @@ COPY ignition/ ./ignition/
 # This ensures the correct binaries are downloaded for the actual runtime platform
 
 # Copy and set up entrypoint script
-COPY docker-entrypoint.sh /usr/local/bin/
-COPY setup-keypair.sh /usr/local/bin/devtools-scripts/setup-keypair.sh
-COPY check-balance.sh /usr/local/bin/devtools-scripts/check-balance.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/devtools-scripts/setup-keypair.sh
-RUN chmod +x /usr/local/bin/devtools-scripts/check-balance.sh
+COPY ./scripts/devtool-scripts /usr/local/bin/devtools-scripts
+COPY ./scripts/devtools.sh /usr/local/bin/devtools
+RUN chmod +x /usr/local/bin/devtools /usr/local/bin/devtools-scripts/*
 
 # Set working directory to where user's project will be mounted
 WORKDIR /project
 
 # Expose default Hardhat port (if running a local node)
 EXPOSE 8545
-
-# Use our initialization script as entrypoint
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

@@ -142,28 +142,3 @@ if [ "$EMULATION_MODE" = "true" ]; then
     echo -e "${YELLOW}⚠️  Note: x86_64 binaries will be executed under emulation${NC}"
     echo -e "${YELLOW}   If you encounter 'rosetta error', the binaries may not be compatible${NC}"
 fi
-
-echo ""
-
-# Return to project directory
-cd $PROJECT_DIR
-
-# Execute the command passed to docker run, or start bash if none
-if [ "$#" -eq 0 ]; then
-    # Check if we have a TTY (interactive terminal)
-    if [ -t 0 ]; then
-        # Interactive mode - normal docker run
-        echo -e "${BLUE}Starting interactive shell...${NC}"
-        echo ""
-        # Start bash and run the setup script after it's ready
-        exec /bin/bash -c "source /usr/local/bin/devtools-scripts/setup-keypair.sh; exec /bin/bash"
-    else
-        # Non-interactive mode - likely devcontainer
-        echo -e "${BLUE}Running in non-interactive mode (DevContainer)...${NC}"
-        echo ""
-        # Keep the container running for VS Code
-        exec sleep infinity
-    fi
-else
-    exec "$@"
-fi
