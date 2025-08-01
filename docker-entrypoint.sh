@@ -194,20 +194,20 @@ chmod +x /tmp/setup_private_key.sh
 
 # Execute the command passed to docker run, or start bash if none
 if [ "$#" -eq 0 ]; then
-    echo -e "${BLUE}Starting interactive shell...${NC}"
-    echo ""
-    
-    # Start bash and run the setup script after it's ready
-    exec /bin/bash -c "source /tmp/setup_private_key.sh; exec /bin/bash"
-else
-    # If we're being run from devcontainer postCreateCommand, just run initialization
-    # without exec'ing (which would terminate the script)
-    if [ "$1" = "devcontainer-init" ]; then
-        echo -e "${GREEN}Running devcontainer initialization...${NC}"
-        # Source the setup script but don't exec
-        source /tmp/setup_private_key.sh
-        echo -e "${GREEN}✓ Devcontainer initialization complete${NC}"
+    # Check if we have a TTY (interactive terminal)
+    if [ -t 0 ]; then
+        # Interactive mode - normal docker run
+        echo -e "${BLUE}Starting interactive shell...${NC}"
+        echo ""
+        # Start bash and run the setup script after it's ready
+        exec /bin/bash -c "source /tmp/setup_private_key.sh; exec /bin/bash"
     else
-        exec "$@"
+        # Non-interactive mode - likely devcontainer
+        echo -e "${BLUE}Running in non-interactive mode (DevContainer)...${NC}"
+        echo ""
+        # Keep the container running for VS Code
+        exec sleep infinity
     fi
+else
+    exec "$@"
 fi
