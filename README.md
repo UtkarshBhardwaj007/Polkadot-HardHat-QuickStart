@@ -17,6 +17,7 @@ curl -fsSL --create-dirs \
   https://raw.githubusercontent.com/UtkarshBhardwaj007/Polkadot-HardHat-QuickStart/charles-dev/.devcontainer/devcontainer.json
 ```
 2. Open the project in VS Code, and press the "Reopen in Container" button.
+3. As the Dev Container sets up, follow the instructions to configure a Paseo keypair with tokens to deploy your EVM contracts!
 
 
 ### Option 2: Use Docker Directly
