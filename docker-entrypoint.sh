@@ -113,52 +113,36 @@ mkdir -p $PROJECT_DIR/binaries
 cd $PROJECT_DIR/binaries
 
 echo -e "${GREEN}Downloading Linux AMD64 binaries...${NC}"
-if [ "$EMULATION_MODE" = "true" ] && [ "$ARCH" = "aarch64" -o "$ARCH" = "arm64" ]; then
-    echo -e "${YELLOW}⚠️  Cannot run x86_64 binaries on ARM64 under emulation${NC}"
-    echo -e "${YELLOW}   Creating placeholder scripts to avoid Rosetta errors${NC}"
-    
-    # Create safe placeholder scripts
-    cat > substrate-node << 'EOF'
-#!/bin/bash
-echo "substrate-node: Cannot run x86_64 binary on ARM64 architecture"
-echo "This is a placeholder to prevent Rosetta emulation errors"
-echo "For actual functionality, ARM64 binaries would be needed"
-exit 1
-EOF
+wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
+    echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
+    echo "#!/bin/bash" > substrate-node
+    echo "echo 'substrate-node dummy binary - download failed'" >> substrate-node
+}
 
-    cat > eth-rpc << 'EOF'
-#!/bin/bash
-echo "eth-rpc: Cannot run x86_64 binary on ARM64 architecture"
-echo "This is a placeholder to prevent Rosetta emulation errors"
-echo "For actual functionality, ARM64 binaries would be needed"
-exit 1
-EOF
-else
-    # Download actual binaries for x86_64
-    wget -q -O substrate-node "http://releases.parity.io/substrate-node/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/substrate-node" || {
-        echo -e "${YELLOW}Failed to download substrate-node, using dummy binary${NC}"
-        echo "#!/bin/bash" > substrate-node
-        echo "echo 'substrate-node dummy binary - download failed'" >> substrate-node
-    }
+wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
+    echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
+    echo "#!/bin/bash" > eth-rpc
+    echo "echo 'eth-rpc dummy binary - download failed'" >> eth-rpc
+}
 
-    wget -q -O eth-rpc "http://releases.parity.io/eth-rpc/polkadot-stable2555-rc5/x86_64-unknown-linux-gnu/eth-rpc" || {
-        echo -e "${YELLOW}Failed to download eth-rpc, using dummy binary${NC}"
-        echo "#!/bin/bash" > eth-rpc
-        echo "echo 'eth-rpc dummy binary - download failed'" >> eth-rpc
-    }
-    
-    # Check binary architecture
-    if command -v file >/dev/null 2>&1; then
-        echo -e "${BLUE}ℹ️  Binary info:${NC}"
-        file substrate-node 2>/dev/null | grep -q "ELF" && file substrate-node || echo "   substrate-node: not a valid binary"
-        file eth-rpc 2>/dev/null | grep -q "ELF" && file eth-rpc || echo "   eth-rpc: not a valid binary"
-    fi
+# Check binary architecture if file command is available
+if command -v file >/dev/null 2>&1; then
+    echo -e "${BLUE}ℹ️  Downloaded binary information:${NC}"
+    file substrate-node 2>/dev/null | grep -q "ELF" && file substrate-node || echo "   substrate-node: not a valid binary"
+    file eth-rpc 2>/dev/null | grep -q "ELF" && file eth-rpc || echo "   eth-rpc: not a valid binary"
 fi
 
 # Make binaries executable
 chmod +x substrate-node eth-rpc
 
 echo -e "${GREEN}✓ Binaries setup complete${NC}"
+
+# Additional debugging for emulation mode
+if [ "$EMULATION_MODE" = "true" ]; then
+    echo -e "${YELLOW}⚠️  Note: x86_64 binaries will be executed under emulation${NC}"
+    echo -e "${YELLOW}   If you encounter 'rosetta error', the binaries may not be compatible${NC}"
+fi
+
 echo ""
 
 # Return to project directory
