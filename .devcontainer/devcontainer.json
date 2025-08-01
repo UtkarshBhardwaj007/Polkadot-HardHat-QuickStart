@@ -6,7 +6,7 @@
     "overrideCommand": true,
     "runArgs": ["--init"],
     "remoteUser": "root",
-    "postStartCommand": "/usr/local/bin/docker-entrypoint.sh",
+    "postCreateCommand": "cd /project && /usr/local/bin/docker-entrypoint.sh devcontainer-init",
     "customizations": {
         "vscode": {
             "extensions": [

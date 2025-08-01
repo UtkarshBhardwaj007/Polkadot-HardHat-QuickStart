@@ -200,5 +200,14 @@ if [ "$#" -eq 0 ]; then
     # Start bash and run the setup script after it's ready
     exec /bin/bash -c "source /tmp/setup_private_key.sh; exec /bin/bash"
 else
-    exec "$@"
+    # If we're being run from devcontainer postCreateCommand, just run initialization
+    # without exec'ing (which would terminate the script)
+    if [ "$1" = "devcontainer-init" ]; then
+        echo -e "${GREEN}Running devcontainer initialization...${NC}"
+        # Source the setup script but don't exec
+        source /tmp/setup_private_key.sh
+        echo -e "${GREEN}✓ Devcontainer initialization complete${NC}"
+    else
+        exec "$@"
+    fi
 fi
