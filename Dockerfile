@@ -57,9 +57,9 @@ COPY ignition/ ./ignition/
 # This ensures the correct binaries are downloaded for the actual runtime platform
 
 # Copy and set up entrypoint script
-COPY ./scripts/devtool-scripts /usr/local/bin/devtools-scripts
+COPY ./scripts/devtool-scripts /usr/local/bin/devtool-scripts
 COPY ./scripts/devtools.sh /usr/local/bin/devtools
-RUN chmod +x /usr/local/bin/devtools /usr/local/bin/devtools-scripts/*
+RUN chmod +x /usr/local/bin/devtools /usr/local/bin/devtool-scripts/*
 
 # Set working directory to where user's project will be mounted
 WORKDIR /project

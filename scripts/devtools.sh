@@ -1,2 +1,2 @@
-BIN=./scripts
+BIN=/usr/local/bin
 bash $BIN/devtool-scripts/$1.sh
