@@ -3,13 +3,13 @@
     "image": "ghcr.io/utkarshbhardwaj007/polkadot-hardhat-quickstart:latest",
     "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind",
     "workspaceFolder": "/project",
-    "overrideCommand": false,
+    "overrideCommand": true,
     "updateRemoteUserUID": false,
     "containerEnv": {
         "WORKSPACE_DIR": "/workspace",
         "PROJECT_DIR": "/project"
     },
-
+    "postCreateCommand": "chmod +x /project/.devcontainer/init.sh && /project/.devcontainer/init.sh",
     "remoteUser": "root",
     "customizations": {
         "vscode": {
